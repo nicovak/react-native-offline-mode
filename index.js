@@ -15,16 +15,17 @@ const RequiresConnection = (WhenOnline, WhenOffline) => class RequiresConnection
   }
 
   componentDidMount () {
-    let connect = ({ type }) => this.setState({ isConnected: type !== 'none' })
+    let connect = ({ isConnected }) => this.setState({ isConnected })
 
-    NetInfo.getConnectionInfo().done((connectionInfo) => {
-      connect({ type: connectionInfo.type })
-      NetInfo.addEventListener('connectionChange', connect)
-    })
+    const unsubscribe = NetInfo.addEventListener(state => {
+      // console.log("Connection type", state.type);
+      // console.log("Is connected?", state.isConnected);
+      connect(state.isConnected);
+    });
   }
   
   componentWillUnmount () {
-      NetInfo.removeEventListener('connectionChange')
+      unsubscribe();
   }
 
   render () {
