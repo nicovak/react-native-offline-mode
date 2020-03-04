@@ -1,11 +1,12 @@
 'use strict'
 import React, { Component } from 'react'
 import {
-  NetInfo,
   StyleSheet,
   Text,
   View
-} from 'react-native'
+} from 'react-native';
+
+import NetInfo from "@react-native-community/netinfo";
 
 const RequiresConnection = (WhenOnline, WhenOffline) => class RequiresConnection extends Component {
   constructor (props) {
